@@ -1,0 +1,11 @@
+.state--base {
+  margin-left: auto;
+}
+
+.state--success {
+  color: greenyellow;
+}
+
+.state--failure {
+  color: orangered;
+}

@@ -1,0 +1,19 @@
+.button--base:hover {
+  color: var(--brand);
+}
+
+.button--base:active {
+  filter: brightness(0.8);
+}
+
+.button--base:focus-visible {
+  color: var(--brand);
+}
+
+.button--wrapper {
+  all: unset;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
