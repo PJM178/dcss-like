@@ -1,7 +1,10 @@
 "use client"
 
+import { floorMappings } from "@/assets/floor/mappings";
 import { getAsset, loadImage } from "@/assets/imageLoader";
+import { overworldGrid } from "@/gameData/overworld";
 import { useAssets } from "@/hooks/useAssets";
+import { Renderer } from "@/renderer";
 import { useEffect, useRef } from "react";
 
 interface GameScreenProps {
@@ -11,25 +14,21 @@ interface GameScreenProps {
 const GameScreen = (props: GameScreenProps) => {
   const gameView = useRef<HTMLCanvasElement>(null);
 
-  function draw(canvas: HTMLCanvasElement) {
-    const ctx = canvas.getContext("2d");
+  function drawGameWorld() {
 
-    if (ctx) {
-      ctx.drawImage(getAsset("floor"), 32, 32, 32, 32, 32, 32, 32, 32);
-      ctx.fillStyle = "rgb(200 0 0)";
-      ctx.fillRect(100, 100, 50, 50);
-
-      ctx.fillStyle = "rgb(0 0 200 / 50%)";
-      ctx.fillRect(30, 30, 50, 50);
-    }
   }
 
   useEffect(() => {
     if (gameView.current) {
-      console.log(gameView.current?.getContext("2d"));
       if (props.assetsLoaded) {
-        console.log(getAsset("floor"));
-        draw(gameView.current);
+        const renderer = new Renderer(gameView.current);
+        
+        for (let i = 0; i < overworldGrid.height; i++) {
+          for (let j = 0; j < overworldGrid.width; j++) {
+            renderer.drawTile("floor", floorMappings["grass"], j, i);
+          }
+        }
+        renderer.drawTile("player", floorMappings["grass"], 0, 0);
       }
     }
   }, [props.assetsLoaded]);

@@ -6,7 +6,7 @@ async function sleep(ms: number) {
 
 export async function loadImage(name: string, src: string) {
   // Simulate delay here for dev purposes
-  await sleep(Math.random() * 10000);
+  // await sleep(Math.random() * 10000);
 
   return new Promise((res, rej) => {
     const img = new Image();

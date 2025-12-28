@@ -10,7 +10,7 @@ export enum LoadingState {
 };
 
 export function useAssets() {
-  const assetsToLoad = ["floor", "wall", "test"];
+  const assetsToLoad = ["floor", "wall", "player"];
   const [assetState, setAssetState] = useState<Record<string, LoadingState>>(
     Object.fromEntries(assetsToLoad.map((ass) => [ass, LoadingState.Loading]))
   );
@@ -28,7 +28,7 @@ export function useAssets() {
         console.log("Successfully loaded asset: ", ass)
         setAssetState(prev => {
           return (
-            { ...prev, [ass]: Math.random() > 0.5 ? LoadingState.Success : LoadingState.Failure }
+            { ...prev, [ass]: LoadingState.Success }
           );
         })
       })
