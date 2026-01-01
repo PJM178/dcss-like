@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 // This controls the list of material symbols to be loaded from google fonts api
 // When needing to use a symbol somewhere in the app, add it first here
 // Only works when in alphabetical order so maybe sort them in href
-const iconList = ["error", "refresh"];
+const iconList = ["error", "refresh", "arrow_upward"];
 
 export default function RootLayout({
   children,

@@ -1,66 +1,64 @@
+// import { GridState } from "./grid";
+
+import { BaseEntityState, EntityAvatar } from "./baseEntity";
 import { GridState } from "./grid";
 
-interface PlayerAvatar {
-  w: number;
-  h: number;
-  sx: number;
-  sy: number;
-}
+// interface PlayerAvatar {
+//   w: number;
+//   h: number;
+//   sx: number;
+//   sy: number;
+// }
 
-export class PlayerState {
-  private position: { x: number, y: number };
-  private avatar: PlayerAvatar;
-  private gridState: GridState;
+// export class PlayerState {
+//   private position: { x: number, y: number };
+//   private avatar: PlayerAvatar;
+//   private gridState: GridState;
 
-  constructor(x: number, y: number, avatar: PlayerAvatar, gridState: GridState) {
-    this.position = { x, y };
-    this.avatar = avatar;
-    this.gridState = gridState;
-  }
+//   constructor(x: number, y: number, avatar: PlayerAvatar, gridState: GridState) {
+//     this.position = { x, y };
+//     this.avatar = avatar;
+//     this.gridState = gridState;
+//   }
 
-  updatePlayerPosition(x: number, y: number) {
-    const { w, h } = this.gridState.getGridDimensions();
+//   updatePlayerPosition(x: number, y: number) {
+//     const clampedX = this.clampCoordinate(x, "x");
+//     const clampedY = this.clampCoordinate(y, "y");
 
-    if (x < 0) {
-      if (y < 0) {
-        return this.position = { x: 0, y: 0 };
-      }
+//     this.position = { x: clampedX, y: clampedY };
+//   }
 
-      return this.position = { x: 0, y };
-    }
+//   private clampCoordinate(coor: number, axis: "x" | "y") {
+//     if (coor < 0) {
+//       return 0;
+//     }
 
-    if (y < 0) {
-      if (x < 0) {
-        return this.position = { x: 0, y: 0 };
-      }
+//     if (axis === "x") {
+//       if (coor >= this.gridState.getGridDimensions().w) {
+//         return this.gridState.getGridDimensions().w - 1;
+//       }
 
-      return this.position = { x, y: 0 };
-    }
+//       return coor;
+//     } else {
+//       if (coor >= this.gridState.getGridDimensions().h) {
+//         return this.gridState.getGridDimensions().h - 1;
+//       }
 
-    if (x >= w) {
-      if (y >= h) {
-        return this.position = { x: w - 1, y: h - 1 };
-      }
+//       return coor;
+//     }
+//   }
 
-      return this.position = { x: w - 1, y };
-    }
+//   getPlayerPosition() {
+//     return this.position;
+//   }
 
-    if (y >= h) {
-      if (x >= w) {
-        return this.position = { x: w - 1, y: h - 1 };
-      }
+//   getPlayerAvatar() {
+//     return this.avatar;
+//   }
+// }
 
-      return this.position = { x, y: h - 1 };
-    }
-
-    this.position = { x, y };
-  }
-
-  getPlayerPosition() {
-    return this.position;
-  }
-
-  getPlayerAvatar() {
-    return this.avatar;
+export class PlayerState extends BaseEntityState {
+  constructor(x: number, y: number, avatar: EntityAvatar, gridState: GridState) {
+    super(x, y, avatar, gridState);
   }
 }

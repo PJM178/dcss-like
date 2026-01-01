@@ -9,6 +9,9 @@ import { GridState } from "@/gameState/grid";
 import { PlayerState } from "@/gameState/player";
 import { Renderer } from "@/renderer";
 import { useEffect, useRef } from "react";
+import Controller from "./input/Controller";
+import EnemySpawner from "./spawner/EnemySpawner";
+import { EntitySpawner } from "@/util/spawner";
 
 interface GameScreenProps {
   assetsLoaded: boolean;
@@ -18,13 +21,15 @@ const GameScreen = (props: GameScreenProps) => {
   const gameView = useRef<HTMLCanvasElement>(null);
   const gridStateRef = useRef(new GridState({ w: overworldGrid.width, h: overworldGrid.height }));
   const playerStateRef = useRef(new PlayerState(3, 3, tile_info[3], gridStateRef.current));
-  const rendererRef = useRef<Renderer>(null);
+  const rendererRef = useRef<Renderer>(new Renderer(playerStateRef.current, gridStateRef.current));
+  const spawnerRef = useRef<EntitySpawner>(new EntitySpawner(gridStateRef.current));
+  // 861 index
+  const npc = "";
 
   useEffect(() => {
     if (gameView.current) {
       if (props.assetsLoaded) {
-        rendererRef.current = new Renderer(gameView.current, playerStateRef.current, gridStateRef.current);
-
+        rendererRef.current.initializeCanvas(gameView.current);
         // Generating initial grid
         gridStateRef.current.generateInitialGameGrid("floor", floorMappings["grass"], { x: 35, y: 40 });
 
@@ -39,9 +44,9 @@ const GameScreen = (props: GameScreenProps) => {
   // Things to be loaded only on mount, i.e. only once
   useEffect(() => {
     if (gameView.current && rendererRef.current) {
-      const controller = new PlayerController(playerStateRef.current, rendererRef.current);
+      const playerController = new PlayerController(playerStateRef.current, rendererRef.current);
 
-      return () => controller.dispose();
+      return () => playerController.dispose();
     }
   }, [props.assetsLoaded]);
 
@@ -54,9 +59,10 @@ const GameScreen = (props: GameScreenProps) => {
         width={Renderer.CAMERA_VIEW_X}
         style={{ height: Renderer.CAMERA_VIEW_Y * 2, width: Renderer.CAMERA_VIEW_X * 2 }}
       >
-        {/* <canvas ref={gameView} id="gameView" height="672" width="672"> */}
         This is the rendered game screen
       </canvas>
+      <Controller renderer={rendererRef.current} playerState={playerStateRef.current} />
+      <EnemySpawner enemySpawner={spawnerRef.current} />
     </div>
   );
 }

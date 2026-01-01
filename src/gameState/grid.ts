@@ -3,6 +3,8 @@ import { TileData } from "@/assets/floor/mappings";
 import { getAsset } from "@/assets/imageLoader";
 import { Renderer } from "@/renderer";
 import { weightedRandom } from "@/util/helpers";
+import { Enemy } from "./enemy";
+import { NPC } from "./npc";
 
 interface CurrentGameGrid {
   image: CanvasImageSource;
@@ -19,9 +21,18 @@ interface CurrentGameGrid {
 export class GridState {
   private currentGameGrid: CurrentGameGrid[] = [];
   private gridDimensions: { w: number, h: number };
+  private entityList: (Enemy | NPC)[] = [];
 
   constructor(dimensions: { w: number, h: number }) {
     this.gridDimensions = dimensions;
+  }
+
+  getEntityList() {
+    return this.entityList;
+  }
+
+  addEntity(entity: Enemy | NPC) {
+    this.entityList.push(entity);
   }
 
   updateCurrentGameGrid(tile: CurrentGameGrid, dimensions: { x: number, y: number }) {

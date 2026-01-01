@@ -23,7 +23,7 @@ export const floorMappings: MappingType = {
     effects: null,
   },
   grass: {
-    variants: [150, 20, 10, 20, 10, 3, 2, 2, 1, 2, 1],
+    variants: [700, 20, 10, 20, 10, 3, 2, 2, 1, 2, 1],
     index: 448,
     canStand: true,
     effects: null,

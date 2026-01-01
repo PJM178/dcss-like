@@ -22,18 +22,17 @@ export class PlayerController {
       ev.preventDefault();
     }
 
-    const { x, y } = this.playerState.getPlayerPosition();
+    const { x, y } = this.playerState.getEntityPosition();
 
     if (ev.code === "ArrowRight") {
-      this.playerState.updatePlayerPosition(x + 1, y);
+      this.playerState.updateEntityPosition(x + 1, y);
     } else if (ev.code === "ArrowLeft") {
-      this.playerState.updatePlayerPosition(x - 1, y);
+      this.playerState.updateEntityPosition(x - 1, y);
     } else if (ev.code === "ArrowUp") {
-      this.playerState.updatePlayerPosition(x, y - 1);
+      this.playerState.updateEntityPosition(x, y - 1);
     } else if (ev.code === "ArrowDown") {
-      this.playerState.updatePlayerPosition(x, y + 1);
+      this.playerState.updateEntityPosition(x, y + 1);
     }
-    console.log(this.playerState.getPlayerPosition());
 
     this.renderer.frame();
   }
