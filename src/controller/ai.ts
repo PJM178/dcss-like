@@ -1,10 +1,9 @@
-import { Enemy } from "@/gameState/enemy";
-import { NPC } from "@/gameState/npc";
+import { BaseEntityState } from "@/gameState/baseEntity";
 
 export class AI {
-  private entity: NPC | Enemy;
+  private entity: BaseEntityState;
 
-  constructor(entity: NPC | Enemy) {
+  constructor(entity: BaseEntityState) {
     this.entity = entity;
   }
 

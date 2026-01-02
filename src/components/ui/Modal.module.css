@@ -1,0 +1,17 @@
+.backdrop {
+  background-color: rgba(0, 0, 0, 0.2);
+  inset: 0;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: linear 150ms opacity;
+}
+
+.backdrop--open {
+  opacity: 1;
+}
+
+.backdrop--closed {
+  opacity: 0;
+}

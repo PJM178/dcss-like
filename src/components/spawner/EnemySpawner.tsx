@@ -1,8 +1,9 @@
 import { EntitySpawner } from "@/util/spawner";
 import { Button } from "../ui/Buttons";
-import { Enemy } from "@/gameState/enemy";
 import { tile_info } from "@/assets/player/mappings";
 import { NPC } from "@/gameState/npc";
+import { useState } from "react";
+import Modal from "../ui/Modal";
 
 interface EnemySpawnerProps {
   enemySpawner: EntitySpawner;
@@ -10,7 +11,8 @@ interface EnemySpawnerProps {
 
 const EnemySpawner = (props: EnemySpawnerProps) => {
   const { enemySpawner } = props;
-  
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const handleSpawnEntity = () => {
     const npc = new NPC(3, 3, tile_info[6], enemySpawner.getGridState());
 
@@ -18,12 +20,22 @@ const EnemySpawner = (props: EnemySpawnerProps) => {
   };
 
   return (
-    <Button
-      variant="wrapper"
-      onClick={handleSpawnEntity}
-    >
-      Spawn entity
-    </Button>
+    <>
+      <Button
+        variant="wrapper"
+        onClick={() => setIsModalOpen(true)}
+      >
+        Spawn entity
+      </Button>
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      >
+        <div>
+          This is modal content
+        </div>
+      </Modal>
+    </>
   );
 };
 
