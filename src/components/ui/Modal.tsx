@@ -33,6 +33,7 @@ const Modal = (props: ModalProps) => {
         onTransitionEnd={handleOnTransitionEnd}
       >
         <div
+          className={styles["modal--content"]}
           onClick={(e) => e.stopPropagation()}
         >
           {props.children}

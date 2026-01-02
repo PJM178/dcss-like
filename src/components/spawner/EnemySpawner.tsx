@@ -2,7 +2,7 @@ import { EntitySpawner } from "@/util/spawner";
 import { Button } from "../ui/Buttons";
 import { tile_info } from "@/assets/player/mappings";
 import { NPC } from "@/gameState/npc";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Modal from "../ui/Modal";
 
 interface EnemySpawnerProps {
@@ -25,14 +25,20 @@ const EnemySpawner = (props: EnemySpawnerProps) => {
         variant="wrapper"
         onClick={() => setIsModalOpen(true)}
       >
-        Spawn entity
+        Select entity
       </Button>
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
       >
         <div>
-          This is modal content
+          <Button
+            variant="wrapper"
+            onClick={handleSpawnEntity}
+          >
+            Spawn entity - insert canvas element component here for selection of the entity to spawn the selected entity
+            Basically the .png style sheet
+          </Button>
         </div>
       </Modal>
     </>

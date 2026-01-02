@@ -15,3 +15,12 @@
 .backdrop--closed {
   opacity: 0;
 }
+
+.modal--content {
+  max-width: 200px;
+  width: 200px;
+  height: 200px;
+  background-color: darkgrey;
+  padding: 1rem;
+  border-radius: 8px;
+}
