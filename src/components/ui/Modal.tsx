@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./Modal.module.css";
 import { createPortal } from "react-dom";
 
@@ -6,9 +6,11 @@ interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   children: React.ReactNode;
+  onRender: () => void;
 }
 
 const Modal = (props: ModalProps) => {
+  const { onRender } = props;
   const [shouldRender, setShouldRender] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -29,9 +31,13 @@ const Modal = (props: ModalProps) => {
   // Focus modal so that keyboard events are captured by react event handler
   useEffect(() => {
     if (modalRef.current) {
-      modalRef.current.focus();
+      // modalRef.current.focus();
     }
-  }, [shouldRender]);
+
+    if (shouldRender) {
+      onRender();
+    }
+  }, [shouldRender, onRender]);
 
   const handleOnTransitionEnd = () => {
     if (!props.isOpen) {
@@ -43,7 +49,7 @@ const Modal = (props: ModalProps) => {
 
   return (
     createPortal(
-      < div
+      <div
         className={`${styles["backdrop"]} ${props.isOpen ? styles["backdrop--open"] : styles["backdrop--closed"]}`.trim()}
         onClick={() => props.onClose()}
         onTransitionEnd={handleOnTransitionEnd}
@@ -57,7 +63,7 @@ const Modal = (props: ModalProps) => {
         >
           {props.children}
         </div>
-      </div >,
+      </div>,
       document.body
     )
   );

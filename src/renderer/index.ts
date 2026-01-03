@@ -79,6 +79,7 @@ getCurrentGameGrid() {
   return this.currentGameGrid;
 }
 
+// TODO: This needs to be updated with correct coordinates when taking into account offsets
 drawEntity(dx: number, dy: number, sw: number, sh: number, sx: number, sy: number) {
   if (this.ctx) {
     this.ctx.drawImage(
