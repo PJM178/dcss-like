@@ -31,7 +31,7 @@ const Modal = (props: ModalProps) => {
   // Focus modal so that keyboard events are captured by react event handler
   useEffect(() => {
     if (modalRef.current) {
-      // modalRef.current.focus();
+      modalRef.current.focus();
     }
 
     if (shouldRender) {

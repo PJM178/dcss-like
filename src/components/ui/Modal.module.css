@@ -17,12 +17,14 @@
 }
 
 .modal--content {
-  max-width: 200px;
-  width: 200px;
-  height: 200px;
+  max-width: 80%;
+  max-height: 80%;
   background-color: darkgrey;
   padding: 1rem;
   border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .modal--content:focus {

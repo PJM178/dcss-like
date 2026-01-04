@@ -1,0 +1,11 @@
+.canvas--container {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  display: flex;
+  justify-content: center;
+}
+
+.canvas--container canvas {
+  height: 100%;
+}

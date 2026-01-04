@@ -2,9 +2,10 @@ import { EntitySpawner } from "@/util/spawner";
 import { Button } from "../ui/Buttons";
 import { tile_info } from "@/assets/player/mappings";
 import { NPC } from "@/gameState/npc";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import Modal from "../ui/Modal";
 import { getAsset } from "@/assets/imageLoader";
+import styles from "./EnemySpawner.module.css";
 
 interface EnemySpawnerProps {
   enemySpawner: EntitySpawner;
@@ -157,14 +158,16 @@ const EnemySpawner = (props: EnemySpawnerProps) => {
         onClose={() => setIsModalOpen(false)}
         onRender={onRender}
       >
-        <div>
-          <Button
-            variant="wrapper"
-            onClick={handleSpawnEntity}
-          >
-            Spawn entity - insert canvas element component here for selection of the entity to spawn the selected entity
-            Basically the .png style sheet
-          </Button>
+        <Button
+          variant="wrapper"
+          onClick={handleSpawnEntity}
+        >
+          Spawn entity - insert canvas element component here for selection of the entity to spawn the selected entity
+          Basically the .png style sheet
+        </Button>
+        <div
+          className={styles["canvas--container"]}
+        >
           <canvas
             height={maxTileDimension * tile_info.length / 6 + lineWidth}
             width={maxTileDimension * 6 + lineWidth}
@@ -176,6 +179,9 @@ const EnemySpawner = (props: EnemySpawnerProps) => {
           >
             Select entity
           </canvas>
+        </div>
+        <div>
+          JORMA
         </div>
       </Modal>
     </>
