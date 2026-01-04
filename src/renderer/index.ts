@@ -57,7 +57,7 @@ export class Renderer {
 
       this.gridState.getEntityList().forEach((e) => {
         return (
-          e.AI.wander(),
+          e.getAI().wander(),
           this.drawEntity(
             e.getEntityPosition().x - offsetX,
             e.getEntityPosition().y - offsetY,

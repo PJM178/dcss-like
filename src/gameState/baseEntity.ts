@@ -1,3 +1,4 @@
+import { AI } from "@/controller/ai";
 import { GridState } from "./grid";
 
 export interface EntityAvatar {
@@ -12,12 +13,14 @@ export abstract class BaseEntityState {
   protected avatar: EntityAvatar;
   protected gridState: GridState;
   protected id: string;
+  protected AI: AI;
 
   constructor(x: number, y: number, avatar: EntityAvatar, gridState: GridState) {
     this.position = { x, y };
     this.avatar = avatar;
     this.gridState = gridState;
     this.id = crypto.randomUUID();
+    this.AI = new AI(this);
   }
 
   updateEntityPosition(x: number, y: number) {
@@ -53,5 +56,9 @@ export abstract class BaseEntityState {
 
   getEntityAvatar() {
     return this.avatar;
+  }
+
+  getAI() {
+    return this.AI;
   }
 }
