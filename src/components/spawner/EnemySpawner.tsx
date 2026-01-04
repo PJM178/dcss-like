@@ -159,11 +159,10 @@ const EnemySpawner = (props: EnemySpawnerProps) => {
         onRender={onRender}
       >
         <Button
-          variant="wrapper"
+          variant="primary"
           onClick={handleSpawnEntity}
         >
-          Spawn entity - insert canvas element component here for selection of the entity to spawn the selected entity
-          Basically the .png style sheet
+          Spawn selected entity
         </Button>
         <div
           className={styles["canvas--container"]}

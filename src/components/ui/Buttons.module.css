@@ -10,10 +10,25 @@
   color: var(--brand);
 }
 
+.button--base {
+  all: unset;
+  padding: 0.5rem;
+}
+
 .button--wrapper {
   all: unset;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+}
+
+.button--primary {
+  /* all: unset; */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: solid 2px;
+  border-radius: 7px;
 }
