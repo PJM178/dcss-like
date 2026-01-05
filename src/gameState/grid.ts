@@ -50,19 +50,18 @@ export class GridState {
   generateInitialGameGrid(type: AssetTypes, tileData: TileData, size: { x: number, y: number }, dx?: number, dy?: number) {
     for (let i = 0; i < size.y; i++) {
       for (let j = 0; j < size.x; j++) {
-        const variantTotal = tileData.variants.reduce((a, b) => a + b, 0);
-        const variantProbabilities = tileData.variants.map((v) => v / variantTotal);
+        const variantTotal = tileData.tileWeights.reduce((a, b) => a + b, 0);
+        const variantProbabilities = tileData.tileWeights.map((v) => v / variantTotal);
         const variantToUse = weightedRandom(variantProbabilities);
-        const { index, variants } = tileData;
-        const tileRow = Math.floor(index / Renderer.TILES_PER_ROW) - 1;
-        const tileCol = index % Renderer.TILES_PER_ROW + variantToUse;
+        const { tileInfo } = tileData;
+        const selectedTile = tileInfo[variantToUse];
 
         const tile = {
           image: getAsset(type),
-          sx: tileCol * Renderer.TILE_SIZE,
-          sy: tileRow * Renderer.TILE_SIZE,
-          sw: Renderer.TILE_SIZE,
-          sh: Renderer.TILE_SIZE,
+          sx: selectedTile.sx,
+          sy: selectedTile.sy,
+          sw: selectedTile.w,
+          sh: selectedTile.h,
           dx: j * Renderer.TILE_SIZE,
           dy: i * Renderer.TILE_SIZE,
           dw: Renderer.TILE_SIZE,

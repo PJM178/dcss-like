@@ -67,55 +67,54 @@ export class Renderer {
             e.getEntityAvatar().sy
           )
         );
-    });
+      });
+    }
+
+    // This will keep the loop running at 60 fps, recursively calling this function on every animation frame
+    // For "this" context it's important to have this function to be an arrow function
+    // requestAnimationFrame(this.frame);
   }
 
-  // This will keep the loop running at 60 fps, recursively calling this function on every animation frame
-  // For "this" context it's important to have this function to be an arrow function
-  // requestAnimationFrame(this.frame);
-}
-
-getCurrentGameGrid() {
-  return this.currentGameGrid;
-}
-
-// TODO: This needs to be updated with correct coordinates when taking into account offsets
-drawEntity(dx: number, dy: number, sw: number, sh: number, sx: number, sy: number) {
-  if (this.ctx) {
-    this.ctx.drawImage(
-      getAsset("player"),
-      sx,
-      sy,
-      sw,
-      sh,
-      dx * Renderer.TILE_SIZE,
-      dy * Renderer.TILE_SIZE,
-      Renderer.TILE_SIZE,
-      Renderer.TILE_SIZE,
-    );
+  getCurrentGameGrid() {
+    return this.currentGameGrid;
   }
-}
 
-drawTile(type: AssetTypes, tileData: TileData, dx: number, dy: number) {
-  const variantTotal = tileData.variants.reduce((a, b) => a + b, 0);
-  const variantProbabilities = tileData.variants.map((v) => v / variantTotal);
-  const variantToUse = weightedRandom(variantProbabilities);
-  const { index, variants } = tileData;
-  const tileRow = Math.floor(index / Renderer.TILES_PER_ROW) - 1;
-  const tileCol = index % Renderer.TILES_PER_ROW + variantToUse;
-
-  if (this.ctx) {
-    this.ctx.drawImage(
-      getAsset(type),
-      tileCol * Renderer.TILE_SIZE,
-      tileRow * Renderer.TILE_SIZE,
-      Renderer.TILE_SIZE,
-      Renderer.TILE_SIZE,
-      dx * Renderer.TILE_SIZE,
-      dy * Renderer.TILE_SIZE,
-      Renderer.TILE_SIZE,
-      Renderer.TILE_SIZE,
-    );
+  // TODO: This needs to be updated with correct coordinates when taking into account offsets
+  drawEntity(dx: number, dy: number, sw: number, sh: number, sx: number, sy: number) {
+    if (this.ctx) {
+      this.ctx.drawImage(
+        getAsset("player"),
+        sx,
+        sy,
+        sw,
+        sh,
+        dx * Renderer.TILE_SIZE,
+        dy * Renderer.TILE_SIZE,
+        Renderer.TILE_SIZE,
+        Renderer.TILE_SIZE,
+      );
+    }
   }
-}
+
+  drawTile(type: AssetTypes, tileData: TileData, dx: number, dy: number) {
+    const variantTotal = tileData.tileWeights.reduce((a, b) => a + b, 0);
+    const variantProbabilities = tileData.tileWeights.map((v) => v / variantTotal);
+    const variantToUse = weightedRandom(variantProbabilities);
+    const { tileInfo } = tileData;
+    const selectedTile = tileInfo[variantToUse];
+
+    if (this.ctx) {
+      this.ctx.drawImage(
+        getAsset(type),
+        selectedTile.sx,
+        selectedTile.sy,
+        selectedTile.w,
+        selectedTile.h,
+        dx * Renderer.TILE_SIZE,
+        dy * Renderer.TILE_SIZE,
+        Renderer.TILE_SIZE,
+        Renderer.TILE_SIZE,
+      );
+    }
+  }
 }

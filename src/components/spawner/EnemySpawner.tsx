@@ -124,6 +124,7 @@ const EnemySpawner = (props: EnemySpawnerProps) => {
         drawCornerRect(ctx, offset + currentColumn * maxTileDimension, offset + currentRow * maxTileDimension, maxTileDimension, cornerLength);
       }
 
+      // Draw a box around the tile to indicate that it's currently selected
       if (selectedTileIndex === index) {
         ctx.strokeStyle = strokeStyle;
         ctx.lineWidth = lineWidth;
