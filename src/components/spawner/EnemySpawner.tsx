@@ -20,7 +20,7 @@ const EnemySpawner = (props: EnemySpawnerProps) => {
   const cornerLength = 12; // how far each corner line goes
   const lineWidth = 2;
   const strokeStyle = "#2CFF05";
-  const tilesPerRow = 6;
+  const tilesPerRow = 8;
   const maxTileDimension = useMemo(() => {
     return tile_info.reduce(
       (max, item) => (item.h || item.w) > max ? item.h > item.w ? item.h : item.w : max,
@@ -50,9 +50,9 @@ const EnemySpawner = (props: EnemySpawnerProps) => {
 
     const col = Math.floor(x / maxTileDimension);
     const row = Math.floor(y / maxTileDimension);
-    const colClamped = Math.min(Math.max(0, col), 5); // for 6 tiles per row
-    const rowClamped = Math.min(Math.max(0, row), Math.floor(tile_info.length / 6));
-    const index = rowClamped * 6 + colClamped;
+    const colClamped = Math.min(Math.max(0, col), tilesPerRow - 1); // for 6 tiles per row
+    const rowClamped = Math.min(Math.max(0, row), Math.floor(tile_info.length / tilesPerRow));
+    const index = rowClamped * tilesPerRow + colClamped;
 
     if (index >= 0 && index < tile_info.length) {
       setHoveredTileIndex(index);
@@ -101,7 +101,7 @@ const EnemySpawner = (props: EnemySpawnerProps) => {
 
     if (!ctx) return;
 
-    ctx.clearRect(0, 0, maxTileDimension * tile_info.length / 6 + lineWidth, maxTileDimension * 6 + lineWidth);
+    ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
 
     let currentRow = 0;
     let currentColumn = 0;
@@ -141,12 +141,18 @@ const EnemySpawner = (props: EnemySpawnerProps) => {
 
       currentColumn += 1;
 
-      if (currentColumn >= 6) {
+      if (currentColumn >= tilesPerRow) {
         currentColumn = 0;
         currentRow += 1;
       }
     });
   }
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+    setHoveredTileIndex(null);
+    setSelectedTileIndex(null);
+  };
 
   return (
     <>
@@ -158,7 +164,7 @@ const EnemySpawner = (props: EnemySpawnerProps) => {
       </Button>
       <Modal
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        onClose={handleModalClose}
         onRender={onRender}
       >
         <Button
