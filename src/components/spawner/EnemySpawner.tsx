@@ -37,7 +37,9 @@ const EnemySpawner = (props: EnemySpawnerProps) => {
   };
 
 
-  const handleMouseMove = (ev: React.MouseEvent<HTMLCanvasElement>) => {
+  const handlePointerMove = (ev: React.PointerEvent<HTMLCanvasElement>) => {
+    if (ev.pointerType !== "mouse") return;
+
     const canvas = canvasRef.current;
 
     if (!canvas) return;
@@ -61,10 +63,36 @@ const EnemySpawner = (props: EnemySpawnerProps) => {
     }
   };
 
+  const handlePointerUp = (ev: React.PointerEvent<HTMLCanvasElement>) => {
+    if (ev.pointerType !== "touch") return;
+
+    const canvas = canvasRef.current;
+
+    if (!canvas) return;
+
+    const rect = canvas.getBoundingClientRect();
+    const offset = lineWidth; // same offset used in drawing
+
+    const x = ev.clientX - rect.left - offset; // mouse x in canvas coordinates
+    const y = ev.clientY - rect.top - offset;  // mouse y in canvas coordinates
+
+    const col = Math.floor(x / maxTileDimension);
+    const row = Math.floor(y / maxTileDimension);
+    const colClamped = Math.min(Math.max(0, col), tilesPerRow - 1); // for 6 tiles per row
+    const rowClamped = Math.min(Math.max(0, row), Math.floor(tile_info.length / tilesPerRow));
+    const index = rowClamped * tilesPerRow + colClamped;
+
+    if (index >= 0 && index < tile_info.length) {
+      setSelectedTileIndex(index);
+    } else {
+      setSelectedTileIndex(null);
+    }
+  }
+
   const handleMouseLeave = () => setHoveredTileIndex(null);
 
   const handleMouseClick = () => {
-    setSelectedTileIndex(hoveredTileIndex);
+    setSelectedTileIndex(hoveredTileIndex || selectedTileIndex);
   };
 
   function drawCornerRect(ctx: CanvasRenderingContext2D, x: number, y: number, tileSize: number, cornerLength: number) {
@@ -181,9 +209,10 @@ const EnemySpawner = (props: EnemySpawnerProps) => {
             width={canvasWidth}
             ref={canvasRef}
             style={{ imageRendering: "pixelated" }}
-            onMouseMove={handleMouseMove}
+            onPointerMove={handlePointerMove}
             onMouseLeave={handleMouseLeave}
             onClick={handleMouseClick}
+            onPointerUp={handlePointerUp}
           >
             Select entity
           </canvas>
