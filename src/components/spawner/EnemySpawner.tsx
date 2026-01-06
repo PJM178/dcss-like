@@ -20,6 +20,15 @@ const EnemySpawner = (props: EnemySpawnerProps) => {
   const cornerLength = 12; // how far each corner line goes
   const lineWidth = 2;
   const strokeStyle = "#2CFF05";
+  const tilesPerRow = 6;
+  const maxTileDimension = useMemo(() => {
+    return tile_info.reduce(
+      (max, item) => (item.h || item.w) > max ? item.h > item.w ? item.h : item.w : max,
+      -Infinity
+    )
+  }, []);
+  const canvasHeight = maxTileDimension * Math.ceil(tile_info.length / tilesPerRow) + lineWidth;
+  const canvasWidth = maxTileDimension * tilesPerRow + lineWidth;
 
   const handleSpawnEntity = () => {
     const npc = new NPC(3, 3, tile_info[selectedTileIndex || 0], enemySpawner.getGridState());
@@ -27,12 +36,6 @@ const EnemySpawner = (props: EnemySpawnerProps) => {
     enemySpawner.spawnEntity(npc);
   };
 
-  const maxTileDimension = useMemo(() => {
-    return tile_info.reduce(
-      (max, item) => (item.h || item.w) > max ? item.h > item.w ? item.h : item.w : max,
-      -Infinity
-    )
-  }, []);
 
   const handleMouseMove = (ev: React.MouseEvent<HTMLCanvasElement>) => {
     const canvas = canvasRef.current;
@@ -100,7 +103,6 @@ const EnemySpawner = (props: EnemySpawnerProps) => {
 
     ctx.clearRect(0, 0, maxTileDimension * tile_info.length / 6 + lineWidth, maxTileDimension * 6 + lineWidth);
 
-    const tilesPerRow = 6;
     let currentRow = 0;
     let currentColumn = 0;
     const offset = lineWidth / 2;
@@ -169,8 +171,8 @@ const EnemySpawner = (props: EnemySpawnerProps) => {
           className={styles["canvas--container"]}
         >
           <canvas
-            height={maxTileDimension * tile_info.length / 6 + lineWidth}
-            width={maxTileDimension * 6 + lineWidth}
+            height={canvasHeight}
+            width={canvasWidth}
             ref={canvasRef}
             style={{ imageRendering: "pixelated" }}
             onMouseMove={handleMouseMove}
