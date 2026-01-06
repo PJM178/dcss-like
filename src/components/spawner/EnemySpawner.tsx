@@ -48,7 +48,7 @@ const EnemySpawner = (props: EnemySpawnerProps) => {
     const col = Math.floor(x / maxTileDimension);
     const row = Math.floor(y / maxTileDimension);
     const colClamped = Math.min(Math.max(0, col), 5); // for 6 tiles per row
-    const rowClamped = Math.min(Math.max(0, row), Math.floor(tile_info.length / 6) - 1);
+    const rowClamped = Math.min(Math.max(0, row), Math.floor(tile_info.length / 6));
     const index = rowClamped * 6 + colClamped;
 
     if (index >= 0 && index < tile_info.length) {

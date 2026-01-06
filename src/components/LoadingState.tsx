@@ -7,7 +7,7 @@ interface LoadingStateProps {
 
 const LoadingState = (props: LoadingStateProps) => {
   const stateText: Record<LoadingStateEnum, string> = {
-    "loading": "loading",
+    "loading": "loading...",
     "success": "ok",
     "failure": "failed",
     "idle": "",

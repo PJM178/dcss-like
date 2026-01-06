@@ -2,13 +2,13 @@ import { TileData } from "../floor/mappings";
 
 export type MappingType = Record<string, TileData>;
 
-export const floorMappings: MappingType = {
-  greyBrick: {
-    variants: [1],
-    index:  + 17,
-    canStand: true,
-    effects: null,
-  }
+export const playerMappings: MappingType = {
+  // greyBrick: {
+  //   variants: [1],
+  //   index:  + 17,
+  //   canStand: true,
+  //   effects: null,
+  // }
 };
 
 // These have been gotten from the actual DCSS source code and map to the player.png sprites

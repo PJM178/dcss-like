@@ -3,7 +3,6 @@
 import GameScreen from "@/components/GameScreen";
 import LoadingScreen from "@/components/LoadingScreen";
 import { useAssets } from "@/hooks/useAssets";
-import { Metadata } from "next";
 
 const GameHome = () => {
   const { ready, assetState, loadAsset } = useAssets();
